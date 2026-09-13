@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pre-Test Energi Terbarukan</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #1f2937;
+}
+
+.container {
+    width: 92%;
+    max-width: 950px;
+    margin: 30px auto;
+}
+
+.card {
+    background: white;
+    border-radius: 14px;
+    padding: 28px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 7px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 170px;
+    resize: vertical;
+}
+
+button {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-primary {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.btn-next {
+    margin-top: 20px;
+}
+
+.btn-back {
+    margin-top: 20px;
+    margin-right: 8px;
+}
+
+.timer {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #111827;
+    color: white;
+    padding: 13px;
+    text-align: center;
+    font-size: 21px;
+    font-weight: bold;
+    border-radius: 0 0 10px 10px;
+}
+
+.warning {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.violation {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.question {
+    display: none;
+}
+
+.question.active {
+    display: block;
+}
+
+.question-number {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.question-text {
+    line-height: 1.7;
+    white-space: pre-line;
+}
+
+.graph {
+    width: 100%;
+    max-width: 900px;
+    display: block;
+    margin: 20px auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.info-box {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.success {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+#testArea {
+    display: none;
+}
+
+.progress {
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+th, td {
+    border: 1px solid #cbd5e1;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background: #f1f5f9;
+}
+
+@media (max-width: 600px) {
+    .card {
+        padding: 18px;
+    }
+
+    .timer {
+        font-size: 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="timer" class="timer hidden">
+    Sisa waktu: <span id="time">20:00</span>
+</div>
+
+<div class="container">
+
+    <!-- HALAMAN AWAL -->
+    <div id="startPage" class="card">
+
+        <h1>Pre-Test Energi Terbarukan</h1>
+
+        <div class="subtitle">
+            Untuk Siswa Kelas X Jenjang SMA
+        </div>
+
+        <div class="info-box">
+            <b>Tipe Soal:</b> Essay<br>
+            <b>Jumlah Soal:</b> 6<br>
+            <b>Alokasi Waktu:</b> 20 menit
+        </div>
+
+        <label for="nama">Nama</label>
+        <input
+            type="text"
+            id="nama"
+            placeholder="Masukkan nama lengkap"
+            autocomplete="off"
+        >
+
+        <label for="kelas">Kelas</label>
+        <input
+            type="text"
+            id="kelas"
+            placeholder="Contoh: X IPA 1"
+            autocomplete="off"
+        >
+
+        <div class="warning">
+            Selama mengerjakan, tetap berada pada halaman tes.
+            Perpindahan tab/jendela dan keluar dari mode layar penuh akan dicatat sebagai pelanggaran.
+        </div>
+
+        <button
+            class="btn-primary"
+            onclick="startTest()"
+        >
+            Mulai Pre-Test
+        </button>
+
+    </div>
+
+
+    <!-- AREA TEST -->
+    <div id="testArea">
+
+        <div class="card">
+
+            <div class="progress">
+                Soal <span id="currentNumber">1</span> dari 6
+            </div>
+
+
+            <!-- SOAL 1 -->
+            <div class="question active" id="q1">
+
+                <div class="question-number">
+                    1.
+                </div>
+
+                <div class="question-text">
+Sebuah desa berada di daerah perbukitan. Pada siang hari, daerah tersebut mendapat sinar matahari cukup kuat. Namun, kebutuhan listrik terbesar terjadi pada malam hari karena digunakan untuk penerangan rumah, pompa air, dan kegiatan warga. Desa juga memiliki sungai dengan aliran yang cukup deras sepanjang tahun.
+
+Berdasarkan kondisi tersebut, sumber energi terbarukan apa yang paling berpotensi dimanfaatkan untuk memenuhi kebutuhan listrik desa? Jelaskan bagaimana sumber energi tersebut dapat diubah menjadi energi listrik dan alasan mengapa sumber tersebut sesuai dengan kondisi desa.
+                </div>
+
+                <textarea
+                    id="jawaban1"
+                    placeholder="Tuliskan jawaban kamu..."
+                ></textarea>
+
+                <button
+                    class="btn-next"
+                    onclick="nextQuestion()"
+                >
+                    Soal Berikutnya →
+                </button>
+
+            </div>
+
+
+            <!-- SOAL 2 -->
+            <div class="question" id="q2">
+
+                <div class="question-number">
+                    2.
+                </div>
+
+                <div class="question-text">
+Perhatikan ketiga grafik berikut! Ketiga grafik tersebut menunjukkan hubungan antara waktu dan kecepatan angin yang ada pada tiga daerah yang berbeda. Setiap daerah memiliki karakteristik kondisi angin yang berbeda sehingga pola hubungan waktu terhadap kecepatan angin yang dihasilkan juga berbeda.
+
+Berdasarkan ketiga grafik tersebut, daerah manakah yang paling sesuai untuk Pembangunan PLTB (Pembangkit Listrik Tenaga Bayu)? Pilih salah satu daerah dan jelaskan alasanmu!
+                </div>
+
+                <img
+                    src="grafik_angin.png"
+                    alt="Grafik A, Grafik B, dan Grafik C"
+                    class="graph"
+                >
+
+                <textarea
+                    id="jawaban2"
+                    placeholder="Tuliskan jawaban kamu..."
+                ></textarea>
+
+                <button
+                    class="btn-back"
+                    onclick="previousQuestion()"
+                >
+                    ← Sebelumnya
+                </button>
+
+                <button
+                    class="btn-next"
+                    onclick="nextQuestion()"
+                >
+                    Soal Berikutnya →
+                </button>
+
+            </div>
+
+
+            <!-- SOAL 3 -->
+            <div class="question" id="q3">
+
+                <div class="question-number">
+                    3.
+                </div>
+
+                <div class="question-text">
+Sebuah kelompok siswa ingin mengetahui pengaruh jumlah sudu turbin air terhadap daya listrik yang dihasilkan. Mereka menguji tiga turbin dengan 3, 5, dan 7 sudu/bilah. Namun, setiap turbin diuji menggunakan debit air yang berbeda, yakni 3 sudu diuji menggunakan debit air 2 L/s, turbin 5 sudu menggunakan debit 3 L/s, dan turbin 7 sudu menggunakan debit 4 L/s. Hasil percobaan menunjukkan turbin dengan 7 sudu yang menghasilkan daya terbesar. Berdasarkan hasil tersebut, kelompok menyimpulkan bahwa semakin banyak jumlah sudu, maka semakin besar daya listrik yang dihasilkan.
+
+Evaluasilah apakah kesimpulan kelompok tersebut sudah dapat dipercaya atau tidak. Jelaskan alasanmu berdasarkan rancangan percobaan, kemudian rancanglah perbaikan percobaan yang lebih tepat untuk mengetahui pengaruh jumlah sudu terhadap daya listrik. Jelaskan variabel yang harus diubah, yang harus dibuat tetap, dan data yang perlu diukur.
+                </div>
+
+                <textarea
+                    id="jawaban3"
+                    placeholder="Tuliskan jawaban kamu..."
+                ></textarea>
+
+                <button
+                    class="btn-back"
+                    onclick="previousQuestion()"
+                >
+                    ← Sebelumnya
+                </button>
+
+                <button
+                    class="btn-next"
+                    onclick="nextQuestion()"
+                >
+                    Soal Berikutnya →
+                </button>
+
+            </div>
+
+
+            <!-- SOAL 4 -->
+            <div class="question" id="q4">
+
+                <div class="question-number">
+                    4.
+                </div>
+
+                <div class="question-text">
+Pengelola sebuah taman edukasi ingin mengurangi penggunaan listrik pada sore hingga malam hari. Mereka mencatat penggunaan tiga peralatan selama satu hari.
+
+• Lampu taman: daya 40 W, digunakan 8 jam.
+
+• Kipas: daya 80 W, digunakan 4 jam.
+
+• Pompa air: daya 200 W, digunakan 2 jam.
+
+Berdasarkan data tersebut, hitung energi listrik yang digunakan oleh masing-masing peralatan dalam satu hari. Peralatan mana yang menggunakan energi listrik paling besar? Jelaskan mengapa peralatan dengan daya paling besar belum tentu menjadi peralatan yang menggunakan energi paling banyak.
+                </div>
+
+                <textarea
+                    id="jawaban4"
+                    placeholder="Tuliskan jawaban kamu..."
+                ></textarea>
+
+                <button
+                    class="btn-back"
+                    onclick="previousQuestion()"
+                >
+                    ← Sebelumnya
+                </button>
+
+                <button
+                    class="btn-next"
+                    onclick="nextQuestion()"
+                >
+                    Soal Berikutnya →
+                </button>
+
+            </div>
+
+
+            <!-- SOAL 5 -->
+            <div class="question" id="q5">
+
+                <div class="question-number">
+                    5.
+                </div>
+
+                <div class="question-text">
+James ingin mengetahui pengaruh luas panel surya terhadap daya listrik yang dihasilkan. Ia memiliki tiga panel surya berukuran 0,5 m², 1 m², dan 1,5 m², sebuah wattmeter, multimeter, kabel, dan penyangga panel. James menguji ketiga panel pada hari yang sama, tetapi panel 0,5 m² diuji pukul 08.00, panel 1 m² pukul 12.00, dan panel 1,5 m² pukul 15.00. Hasil pengukuran menunjukkan panel 1,5 m² menghasilkan daya paling besar. James kemudian menyimpulkan bahwa semakin besar luas panel, semakin besar daya listrik yang dihasilkan.
+
+Jika kamu diminta memperbaiki percobaan James, bagaimana rancangan pengujian yang akan kamu lakukan agar pengaruh luas panel terhadap daya listrik dapat diketahui dengan lebih adil? Jelaskan variable yang harus dibuat tetap dan variabel yang harus diubah dan cara pengambilan datanya. Setelah itu, evaluasilah apakah kesimpulan James sudah dapat dianggap kuat, jelaskan alasanmu!
+                </div>
+
+                <textarea
+                    id="jawaban5"
+                    placeholder="Tuliskan jawaban kamu..."
+                ></textarea>
+
+                <button
+                    class="btn-back"
+                    onclick="previousQuestion()"
+                >
+                    ← Sebelumnya
+                </button>
+
+                <button
+                    class="btn-next"
+                    onclick="nextQuestion()"
+                >
+                    Soal Berikutnya →
+                </button>
+
+            </div>
+
+
+            <!-- SOAL 6 -->
+            <div class="question" id="q6">
+
+                <div class="question-number">
+                    6.
+                </div>
+
+                <div class="question-text">
+SMA Nusa Bangsa mencatat kebutuhan dan kondisi sumber energi berikut selama satu hari.
+                </div>
+
+                <table>
+                    <tr>
+                        <th>Waktu</th>
+                        <th>Kebutuhan listrik (kWh)</th>
+                        <th>Intensitas matahari</th>
+                    </tr>
+
+                    <tr>
+                        <td>Pagi (07.00-10.00)</td>
+                        <td>4</td>
+                        <td>Tinggi</td>
+                    </tr>
+
+                    <tr>
+                        <td>Siang (10.00-15.00)</td>
+                        <td>8</td>
+                        <td>Sangat tinggi</td>
+                    </tr>
+
+                    <tr>
+                        <td>Sore (15.00-18.00)</td>
+                        <td>5</td>
+                        <td>Menurun, angin cukup kuat</td>
+                    </tr>
+
+                    <tr>
+                        <td>Malam (18.00-21.00)</td>
+                        <td>7</td>
+                        <td>Tidak ada cahaya matahari, angin masih tersedia</td>
+                    </tr>
+                </table>
+
+                <div class="question-text">
+Berdasarkan data tersebut, ubahlah informasi pada tabel menjadi rekomendasi sederhana mengenai pemnafaatan sumber energi yang dapat digunakan di sekolah. Jelaskan alasanmu berdasarkan pola kebutuhan listrik dan ketersediaan sumber energi sepanjang hari!
+                </div>
+
+                <textarea
+                    id="jawaban6"
+                    placeholder="Tuliskan jawaban kamu..."
+                ></textarea>
+
+                <button
+                    class="btn-back"
+                    onclick="previousQuestion()"
+                >
+                    ← Sebelumnya
+                </button>
+
+                <button
+                    class="btn-next"
+                    onclick="finishTest()"
+                >
+                    Selesai & Kirim Jawaban
+                </button>
+
+            </div>
+
+            <div id="violationBox" class="violation hidden">
+                Pelanggaran terdeteksi: <span id="violationCount">0</span>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- HALAMAN SELESAI -->
+    <div id="finishPage" class="card success hidden">
+
+        <h1>Pre-Test Selesai ✅</h1>
+
+        <p>
+            Jawaban kamu sudah dikirim.
+        </p>
+
+        <p>
+            Terima kasih sudah mengerjakan.
+        </p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   PENGATURAN
+========================================================= */
+
+const TOTAL_SECONDS = 20 * 60;
+
+/*
+  URL Google Apps Script kamu
+*/
+const GOOGLE_SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbyJbPIYqnWEf6kK3HsWSfEFTaouSvrBfFeUGXbjF19NHbQ06RrBTcih_7P3Z8chqeDF_A/exec";
+
+
+let remainingSeconds = TOTAL_SECONDS;
+let timerInterval = null;
+
+let currentQuestion = 1;
+
+let violationCount = 0;
+
+let testStarted = false;
+let testFinished = false;
+
+let lastViolationTime = 0;
+
+
+/* =========================================================
+   MULAI TES
+========================================================= */
+
+function startTest() {
+
+    const nama = document.getElementById("nama").value.trim();
+    const kelas = document.getElementById("kelas").value.trim();
+
+    if (!nama) {
+        alert("Silakan masukkan nama terlebih dahulu.");
+        return;
+    }
+
+    if (!kelas) {
+        alert("Silakan masukkan kelas terlebih dahulu.");
+        return;
+    }
+
+    testStarted = true;
+
+    document.getElementById("startPage").style.display = "none";
+
+    document.getElementById("testArea").style.display = "block";
+
+    document.getElementById("timer").classList.remove("hidden");
+
+    updateTimer();
+
+    timerInterval = setInterval(updateTimer, 1000);
+
+    /*
+      Meminta fullscreen.
+      Jika browser/perangkat tidak mendukung,
+      tes tetap dapat berjalan.
+    */
+    requestFullscreen();
+
+}
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+function updateTimer() {
+
+    const minutes =
+        Math.floor(remainingSeconds / 60);
+
+    const seconds =
+        remainingSeconds % 60;
+
+    document.getElementById("time").textContent =
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(seconds).padStart(2, "0");
+
+    if (remainingSeconds <= 0) {
+
+        clearInterval(timerInterval);
+
+        alert(
+            "Waktu habis. Jawaban akan dikirim secara otomatis."
+        );
+
+        finishTest();
+
+        return;
+    }
+
+    remainingSeconds--;
+}
+
+
+/* =========================================================
+   NAVIGASI SOAL
+========================================================= */
+
+function showQuestion(number) {
+
+    document.querySelectorAll(".question").forEach(function(q) {
+        q.classList.remove("active");
+    });
+
+    document.getElementById("q" + number)
+        .classList.add("active");
+
+    currentQuestion = number;
+
+    document.getElementById("currentNumber")
+        .textContent = number;
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+function nextQuestion() {
+
+    if (currentQuestion < 6) {
+        showQuestion(currentQuestion + 1);
+    }
+
+}
+
+
+function previousQuestion() {
+
+    if (currentQuestion > 1) {
+        showQuestion(currentQuestion - 1);
+    }
+
+}
+
+
+/* =========================================================
+   FULLSCREEN
+========================================================= */
+
+function requestFullscreen() {
+
+    const element = document.documentElement;
+
+    if (element.requestFullscreen) {
+        element.requestFullscreen().catch(function() {});
+    }
+
+}
+
+
+/* =========================================================
+   PELANGGARAN
+========================================================= */
+
+function registerViolation(reason) {
+
+    if (!testStarted || testFinished) {
+        return;
+    }
+
+    /*
+      Mencegah satu kejadian dihitung berkali-kali
+      dalam waktu sangat berdekatan.
+    */
+
+    const now = Date.now();
+
+    if (now - lastViolationTime < 1500) {
+        return;
+    }
+
+    lastViolationTime = now;
+
+    violationCount++;
+
+    document.getElementById("violationCount")
+        .textContent = violationCount;
+
+    document.getElementById("violationBox")
+        .classList.remove("hidden");
+
+    console.log(
+        "Pelanggaran:",
+        reason
+    );
+
+}
+
+
+/*
+  Mendeteksi ketika siswa pindah tab,
+  minimize, atau halaman tidak terlihat.
+*/
+
+document.addEventListener(
+    "visibilitychange",
+    function() {
+
+        if (document.hidden) {
+            registerViolation("Halaman tidak terlihat");
+        }
+
+    }
+);
+
+
+/*
+  Mendeteksi window kehilangan fokus.
+*/
+
+window.addEventListener(
+    "blur",
+    function() {
+
+        registerViolation("Window kehilangan fokus");
+
+    }
+);
+
+
+/*
+  Mendeteksi keluar dari fullscreen.
+*/
+
+document.addEventListener(
+    "fullscreenchange",
+    function() {
+
+        if (
+            testStarted &&
+            !testFinished &&
+            !document.fullscreenElement
+        ) {
+
+            registerViolation(
+                "Keluar dari mode layar penuh"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   BLOK COPY / CUT / PASTE
+========================================================= */
+
+document.addEventListener(
+    "copy",
+    function(event) {
+
+        if (testStarted && !testFinished) {
+            event.preventDefault();
+            registerViolation("Copy");
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "cut",
+    function(event) {
+
+        if (testStarted && !testFinished) {
+            event.preventDefault();
+            registerViolation("Cut");
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "paste",
+    function(event) {
+
+        if (testStarted && !testFinished) {
+            event.preventDefault();
+            registerViolation("Paste");
+        }
+
+    }
+);
+
+
+/* =========================================================
+   BLOK KLIK KANAN
+========================================================= */
+
+document.addEventListener(
+    "contextmenu",
+    function(event) {
+
+        if (testStarted && !testFinished) {
+
+            event.preventDefault();
+
+            registerViolation(
+                "Klik kanan"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   BLOK SHORTCUT
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (!testStarted || testFinished) {
+            return;
+        }
+
+        const key =
+            event.key.toLowerCase();
+
+        /*
+          Ctrl+C
+          Ctrl+V
+          Ctrl+X
+          Ctrl+A
+          Ctrl+U
+          Ctrl+S
+        */
+
+        if (
+            event.ctrlKey &&
+            ["c","v","x","a","u","s"].includes(key)
+        ) {
+
+            event.preventDefault();
+
+            registerViolation(
+                "Shortcut keyboard"
+            );
+
+        }
+
+
+        /*
+          F12 / Developer Tools
+        */
+
+        if (
+            event.key === "F12"
+        ) {
+
+            event.preventDefault();
+
+            registerViolation(
+                "F12"
+            );
+
+        }
+
+
+        /*
+          Ctrl+Shift+I
+          Ctrl+Shift+J
+          Ctrl+Shift+C
+        */
+
+        if (
+            event.ctrlKey &&
+            event.shiftKey &&
+            ["i","j","c"].includes(key)
+        ) {
+
+            event.preventDefault();
+
+            registerViolation(
+                "Developer tools shortcut"
+            );
+
+        }
+
+
+        /*
+          Print Screen
+        */
+
+        if (
+            event.key === "PrintScreen"
+        ) {
+
+            event.preventDefault();
+
+            registerViolation(
+                "Print Screen"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   KIRIM DATA KE GOOGLE SHEETS
+========================================================= */
+
+function sendDataToGoogleSheets(status) {
+
+    const payload = {
+
+        timestamp_client:
+            new Date().toISOString(),
+
+        nama:
+            document.getElementById("nama").value.trim(),
+
+        kelas:
+            document.getElementById("kelas").value.trim(),
+
+        jawaban_1:
+            document.getElementById("jawaban1").value,
+
+        jawaban_2:
+            document.getElementById("jawaban2").value,
+
+        jawaban_3:
+            document.getElementById("jawaban3").value,
+
+        jawaban_4:
+            document.getElementById("jawaban4").value,
+
+        jawaban_5:
+            document.getElementById("jawaban5").value,
+
+        jawaban_6:
+            document.getElementById("jawaban6").value,
+
+        pelanggaran:
+            violationCount,
+
+        status:
+            status,
+
+        waktu_tersisa_detik:
+            Math.max(remainingSeconds, 0)
+
+    };
+
+
+    /*
+      no-cors digunakan agar browser dapat
+      mengirim data ke Google Apps Script
+      tanpa masalah CORS.
+    */
+
+    fetch(
+        GOOGLE_SCRIPT_URL,
+        {
+            method: "POST",
+
+            mode: "no-cors",
+
+            headers: {
+                "Content-Type":
+                    "text/plain;charset=utf-8"
+            },
+
+            body:
+                JSON.stringify(payload)
+        }
+    )
+    .catch(function(error) {
+
+        console.error(
+            "Pengiriman data gagal:",
+            error
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   SELESAI
+========================================================= */
+
+function finishTest() {
+
+    if (testFinished) {
+        return;
+    }
+
+    testFinished = true;
+
+    clearInterval(timerInterval);
+
+    /*
+      Jika waktu habis, status "Waktu Habis".
+      Jika siswa klik selesai, status "Selesai".
+    */
+
+    const status =
+        remainingSeconds <= 0
+            ? "Waktu Habis"
+            : "Selesai";
+
+
+    sendDataToGoogleSheets(status);
+
+
+    document.getElementById("testArea")
+        .style.display = "none";
+
+    document.getElementById("timer")
+        .classList.add("hidden");
+
+    document.getElementById("finishPage")
+        .classList.remove("hidden");
+
+
+    /*
+      Keluar fullscreen setelah tes selesai.
+    */
+
+    if (document.fullscreenElement) {
+
+        document.exitFullscreen()
+            .catch(function() {});
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
