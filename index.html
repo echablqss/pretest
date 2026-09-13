@@ -221,6 +221,38 @@ textarea {
     -webkit-touch-callout: default;
     touch-action: manipulation;
 }
+
+/* =========================================================
+   PERBAIKAN TAMPILAN SAAT KEYBOARD HP MUNCUL
+   Tetap aman saat mode fullscreen.
+========================================================= */
+html, body {
+    min-height: 100%;
+}
+
+html:fullscreen,
+html:-webkit-full-screen {
+    overflow-y: auto !important;
+}
+
+body:fullscreen,
+body:-webkit-full-screen {
+    overflow-y: auto !important;
+}
+
+#testArea {
+    padding-bottom: 35vh;
+}
+
+@media (max-width: 600px) {
+    #testArea {
+        padding-bottom: 45vh;
+    }
+
+    textarea {
+        min-height: 150px;
+    }
+}
     
 </style>
 </head>
@@ -629,6 +661,67 @@ function startTest() {
     */
     requestFullscreen();
 
+    // Beri waktu browser HP untuk masuk fullscreen, lalu
+    // fokuskan tampilan ke area jawaban yang sedang aktif.
+    setTimeout(function() {
+        keepFocusedAnswerVisible();
+    }, 500);
+
+}
+
+
+/* =========================================================
+   BANTUAN KEYBOARD HP DALAM FULLSCREEN
+========================================================= */
+
+function keepFocusedAnswerVisible() {
+    const active = document.activeElement;
+
+    if (!active) return;
+
+    if (active.tagName !== "TEXTAREA" && active.tagName !== "INPUT") {
+        return;
+    }
+
+    setTimeout(function() {
+        try {
+            active.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+                inline: "nearest"
+            });
+        } catch (error) {
+            active.scrollIntoView();
+        }
+    }, 120);
+}
+
+
+// Saat siswa mengetuk kolom jawaban, pastikan kolomnya terlihat.
+document.addEventListener("focusin", function(event) {
+    if (!testStarted || testFinished) return;
+
+    if (
+        event.target.tagName === "TEXTAREA" ||
+        event.target.tagName === "INPUT"
+    ) {
+        keepFocusedAnswerVisible();
+    }
+});
+
+
+// Pada HP, munculnya keyboard mengubah visual viewport.
+// Scroll ulang agar cursor/teks jawaban tidak tertutup keyboard.
+if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", function() {
+        if (!testStarted || testFinished) return;
+        keepFocusedAnswerVisible();
+    });
+
+    window.visualViewport.addEventListener("scroll", function() {
+        if (!testStarted || testFinished) return;
+        keepFocusedAnswerVisible();
+    });
 }
 
 
@@ -752,8 +845,10 @@ function registerViolation(reason) {
     document.getElementById("violationCount")
         .textContent = violationCount;
 
+    // Pelanggaran tetap dihitung dan dikirim ke Google Sheets,
+    // tetapi jumlahnya tidak ditampilkan kepada siswa.
     document.getElementById("violationBox")
-        .classList.remove("hidden");
+        .classList.add("hidden");
 
     console.log(
         "Pelanggaran:",
