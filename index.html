@@ -805,6 +805,32 @@ document.addEventListener(
     }
 );
 
+/* =========================================================
+   BLOK SELEKSI DAN DRAG TEKS SOAL
+========================================================= */
+
+document.addEventListener("selectstart", function(event) {
+    if (!testStarted || testFinished) return;
+
+    // Siswa tetap boleh memilih teks di kolom jawaban
+    if (
+        event.target.tagName !== "TEXTAREA" &&
+        event.target.tagName !== "INPUT"
+    ) {
+        event.preventDefault();
+    }
+});
+
+document.addEventListener("dragstart", function(event) {
+    if (!testStarted || testFinished) return;
+
+    if (
+        event.target.tagName !== "TEXTAREA" &&
+        event.target.tagName !== "INPUT"
+    ) {
+        event.preventDefault();
+    }
+});
 
 /* =========================================================
    BLOK COPY / CUT / PASTE
