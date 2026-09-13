@@ -135,6 +135,18 @@ button {
 .question-text {
     line-height: 1.7;
     white-space: pre-line;
+
+    /* Mencegah teks soal diseleksi */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Teks di tabel juga tidak bisa diseleksi */
+table {
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .graph {
